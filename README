@@ -1,0 +1,4 @@
+##Python 35+, pip install btfxwss, only focus on trading sys: bitfinex
+###Goals###
+####1.create to test trading via API
+####2.write simple strategies based on moving prices sent by subscribed channel
