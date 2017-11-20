@@ -1,5 +1,6 @@
 import logging,time,sys  
-from btfxwss import BtfxWss  
+from btfxwss import BtfxWss
+from Acc import btfAccount  
       
 log = logging.getLogger(__name__)  
   
@@ -12,8 +13,12 @@ log.addHandler(sh)
 log.addHandler(fh)  
 logging.basicConfig(level=logging.DEBUG, handlers=[fh, sh]) 
 
+secStr = btfAccount()
+
+loginName = str(secStr['APIK'])
+passName = str(secStr['APIS'])
   
-wss = BtfxWss(key = "nvow7pgdJz",secret="rG3")  
+wss = BtfxWss(key=loginName,secret=passName)  
 wss.start()  
 while not wss.conn.connected.is_set():  
     time.sleep(1)  
