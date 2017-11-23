@@ -34,6 +34,7 @@ print("USD bal is" ,USDw)
 # Subscribe to some channels
 wss.subscribe_to_ticker('BTCUSD')
 wss.subscribe_to_order_book('BTCUSD')
+wss.subscribe_to_trades('BTCUSD')
 
 time.sleep(5)
 #Accessing data stored in BtfxWss:
@@ -58,18 +59,22 @@ Morder = {
 "hidden": 0
 }
 
-
+time.sleep(5) #First make sure to canceled
 
 
 wss.new_order(**Morder)	
 print(wss.orders_new.get())
+#######################################################################
+#check trades
+time.sleep(5)
+#############print(wss.transactions.get()) This is the trouble now
 
-#print(wss.transactions.get())
 
 ########################################
 # Unsubscribing from channels:
 wss.unsubscribe_from_ticker('BTCUSD')
 wss.unsubscribe_from_order_book('BTCUSD')
+wss.unsubscribe_from_trades('BTCUSD')
 
 
 
