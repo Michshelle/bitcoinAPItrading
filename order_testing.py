@@ -4,8 +4,8 @@ from Acc import btfAccount
       
 log = logging.getLogger(__name__)  
   
-fh = logging.FileHandler('test.log')  
-fh.setLevel(logging.DEBUG)  
+fh = logging.FileHandler('test.log')
+fh.setLevel(logging.DEBUG) 
 sh = logging.StreamHandler(sys.stdout)  
 sh.setLevel(logging.DEBUG)  
   
@@ -35,24 +35,38 @@ print("USD bal is" ,USDw)
 wss.subscribe_to_ticker('BTCUSD')
 wss.subscribe_to_order_book('BTCUSD')
 
-time.sleep(10)
+time.sleep(5)
 #Accessing data stored in BtfxWss:
 ticker_q=wss.tickers('BTCUSD')
 while not ticker_q.empty():
     print(ticker_q.get())
 
-#######################################
-Morder = {           
+######################################################################
+
+curOrder = wss.orders.get()
+nbOrders = len(curOrder[0][1]) #number of orders
+
+if nbOrders != 0: #Cancel all orders
+	for item in curOrder[0][1]:
+		wss.cancel_order(id=item[0])
+#######################################################################
+Morder = {        
 "type": "EXCHANGE LIMIT",
 "symbol": "tBTCUSD",
-"amount": "0.01",
-"price": "531",
+"amount": "-0.007",
+"price": "5310000",
 "hidden": 0
 }
-wss.new_order(**Morder)
-time.sleep(10)
+
+
+
+
+wss.new_order(**Morder)	
 print(wss.orders_new.get())
-#######################################
+
+#print(wss.transactions.get())
+
+########################################
 # Unsubscribing from channels:
 wss.unsubscribe_from_ticker('BTCUSD')
 wss.unsubscribe_from_order_book('BTCUSD')
