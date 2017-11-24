@@ -66,7 +66,8 @@ wss.new_order(**Morder)
 print(wss.orders_new.get())
 #######################################################################
 #check trades
-time.sleep(5)
+wss.trades('BTCUSD').get()
+
 #############print(wss.transactions.get()) This is the trouble now
 
 
