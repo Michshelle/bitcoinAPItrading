@@ -7,6 +7,8 @@ import hashlib
 import json
 import base64
 
+
+#create the authen header part of V1 document.
 def getAuthHeader(loginName, loginPasswd, rawBody):
     body64str = str(base64.b64encode(rawBody.encode('utf-8')),'utf-8')
     tmpH = hmac.new(loginPasswd.encode(),body64str.encode(), hashlib.sha384)
