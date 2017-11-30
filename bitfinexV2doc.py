@@ -20,11 +20,11 @@ class BitfinexClient(object):
         Returns a nonce
         Used in authentication
         """
-        return str(int(round(time.time() * 10000)))
-
+        return str(int(time.time() * 10000000))
+		
     def _headers(self, path, nonce, body):
         signature = "/api/" + path + nonce + body
-        h = hmac.new(self.SECRET, signature, hashlib.sha384)
+        h = hmac.new(self.SECRET.encode(), signature.encode(), hashlib.sha384)
         signature = h.hexdigest()
         return {
             "bfx-nonce": nonce,
@@ -50,9 +50,21 @@ class BitfinexClient(object):
         if response.status_code == 200:
           return response.json()
         else:
-          print response.status_code
-          print response
+          print(response.status_code)
+          print(response)
+          return ''
+		  
+    def my_wallets(self):
+        """
+        Fetch wallet info
+        """
+        response = self.req("v2/auth/r/wallets")
+        if response.status_code == 200:
+          return response.json()
+        else:
+          print(response.status_code)
+          print(response)
           return ''
 
 client = BitfinexClient()
-print client.active_orders()
+print(client.my_wallets())
